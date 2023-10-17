@@ -1,0 +1,114 @@
+﻿@page "/"
+@model Otthonbazar.Pages.Advertisements.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container">
+    <div>
+        <section >
+            <h2>Keresés</h2>
+            <form>
+                <div class="row mb-1">
+                    <div class="mb-3">
+                        <label class="varos">Város</label>
+                        <input type="text" asp-for="Search.CityName" id="varos" class="form-control">
+                    </div>
+                    <label class="form-label col-12">Ár</label>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <input asp-for="Search.PriceMin" class="form-control" />
+                            <span class="input-group-text">M Ft</span>
+                        </div>
+                    </div>
+                    <span class="col-2 text-center">&ndash;</span>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <input asp-for="Search.PriceMax" class="form-control" />
+                            <span class="input-group-text">M Ft</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <label class="form-label col-12">Alapterület</label>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <input asp-for="Search.PriceMin" class="form-control" />
+                            <span class="input-group-text">m^2</span>
+                        </div>
+                    </div>
+                    <span class="col-2 text-center">&ndash;</span>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <input asp-for="Search.PriceMax" class="form-control" />
+                            <span class="input-group-text">m^2</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-1">
+                    <label class="form-label col-12">Szobák</label>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <input asp-for="Search.PriceMin" class="form-control" />
+                            <span class="input-group-text">szoba</span>
+                        </div>
+                    </div>
+                    <span class="col-2 text-center">&ndash;</span>
+                    <div class="col-5">
+                        <div class="input-group">
+                            <input asp-for="Search.PriceMax" class="form-control" />
+                            <span class="input-group-text">szoba</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" value="Keresés" class="btn btn-light" />
+                    </div>
+                </div>
+            </form>
+
+        </section>
+        <section class="col-lg-8">
+            <h2>Hirdetések</h2>
+            <div class="row row-cols-2 g-10">
+             @foreach (var ad in Model.Advertisement)
+            {
+                <article class="col p-3" style="width: 340px">
+                        <a asp-page="Details" asp-route-id="@ad.Id">
+                            <img src="/images/@ad.ImageUrl" />
+                        </a>
+                        <div style="display: flex; justify-content:space-between;">
+                            <div>
+                                <p>@ad.Price</p> <p> MFt</p>
+                            </div>
+                            <div stlye="display: flex;">
+                                <p>@ad.Size</p>
+                                <p>m^2</p>
+                            </div>
+                        </div>
+                        <div style ="display: flex; justify-content:space-between;">
+                            <div style="display:flex; flex-direction:column;">
+                                <div>
+                                    @ad.City.Zip
+                                </div>
+                                <div>
+                                    @ad.City.Name
+                                </div>
+                            </div>
+                            
+                            <div>
+                                @ad.Address
+                            </div>
+                        </div>
+                        <div>
+                            @ad.AdvertisementType
+                        </div>
+                        <dl style="display:flex;"><dd>Szobák</dd><dt> @ad.Room + @ad.HalfRoom </dt></dl>
+                </article>
+            }
+            </div>
+        </section>
+    </div>
+</div>

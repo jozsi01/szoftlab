@@ -1,0 +1,122 @@
+﻿@page
+@model Otthonbazar.Pages.Advertisements.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="row">
+    <div class="col-7">
+        <h1>Create</h1>
+        <div class="row">
+            <h4>Advertisement</h4>
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-3">
+                    <label asp-for="Advertisement.City.Zip" class="form-label"></label>
+                </div>
+                <div class="col-7">
+                    <input asp-for="Advertisement.Address" class="form-control" />
+                </div>
+            </div>
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-3">
+                    <label asp-for="Advertisement.AdvertisementType" class="form-label"></label>
+                </div>
+                <div class="col-7">
+                    <select asp-for="Advertisement.AdvertisementType" class="form-control"
+                            asp-items="Html.GetEnumSelectList<Otthonbazar.Data.AdvertisementType>()">
+                    </select>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-3">
+                    <label asp-for="Advertisement.Price" class="form-label"></label>
+                </div>
+                <div class="col-5">
+                    <div class="input-group">
+                        <input asp-for="Advertisement.Price" class="form-control" />
+                        <span class="input-group-text">M Ft</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-3">
+                    <label asp-for="Advertisement.Size" class="form-label"></label>
+                </div>
+                <div class="col-5">
+                    <div class="input-group">
+                        <input asp-for="Advertisement.Size" class="form-control" />
+                        <span class="input-group-text">m^2</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-3">
+                    <label asp-for="Advertisement.Room" class="form-label"></label>
+                </div>
+                <div class="col-5">
+                    <div class="input-group">
+                        <input asp-for="Advertisement.Room" class="form-control" />
+                        <span class="input-group-text">szoba</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-3">
+                    <label asp-for="Advertisement.HalfRoom" class="form-label"></label>
+                </div>
+                <div class="col-5">
+                    <div class="input-group">
+                        <input asp-for="Advertisement.HalfRoom" class="form-control" />
+                        <span class="input-group-text">fél szoba</span>
+                    </div>
+                </div>
+            </div>
+            <div class="row g-3 align-items-center mb-3">
+                <div class="col-3">
+                    <label asp-for="Advertisement.BuildDate" class="form-label"></label>
+                </div>
+                <div class="col-7">
+                    <input asp-for="Advertisement.BuildDate" class="form-control" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-5">
+            <div class="col-3">
+                <label asp-for="Advertisement.Description" class="form-label"></label>
+            </div>
+            <div class="col-12">
+                <textarea asp-for="Advertisement.Description" class="form-control" rows="4"></textarea>
+            </div>
+            <label>Kép</label>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="basic-addon2">Choose File</span>
+            <input type="text" class="form-control" placeholder="No file" aria-label="Recipient's username" aria-describedby="basic-addon2">
+        </div>
+    </div>
+    <div class="col-12">
+        <button> Hirdetés feladása</button>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        $(document).ready(function () {
+            $("#City_Zip").on("blur", function (event, b) {
+                // Ha nincs megadva irányítószám, akkor nem hívjuk meg az ajaxot.
+                if ($("#City_Zip").val() === "")
+                    return;
+                $.get("/Advertisements/Create?handler=Zip&zip=" + event.currentTarget.value).then(function
+                    (data) {
+                    $("#City_Name").val(data.name);
+                });
+            })
+        });
+    </script>
+
+}
